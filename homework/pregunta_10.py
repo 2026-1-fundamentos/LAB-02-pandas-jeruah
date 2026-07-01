@@ -4,7 +4,8 @@ datos requeridos se encuentran en los archivos `tbl0.tsv`, `tbl1.tsv` y
 `tbl2.tsv`. En este laboratorio solo puede utilizar las funciones y 
 librerias de pandas para resolver las preguntas.
 """
-
+from pathlib import Path
+import pandas as pd
 
 def pregunta_10():
     """
@@ -20,3 +21,11 @@ def pregunta_10():
     D                   1:2:3:5:5:7
     E   1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
+
+    data_path = Path(__file__).resolve().parent.parent / "files" / "input" / "tbl0.tsv"
+    df = pd.read_csv(data_path, sep="\t")
+    df_grouped = df.groupby("c1")["c2"].apply(lambda x: ":".join(map(str, sorted(x)))).reset_index()
+    return df_grouped.set_index("c1")
+
+if __name__ == "__main__":
+    print(pregunta_10())

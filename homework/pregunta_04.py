@@ -5,7 +5,8 @@ datos requeridos se encuentran en los archivos `tbl0.tsv`, `tbl1.tsv` y
 librerias de pandas para resolver las preguntas.
 """
 
-
+from pathlib import Path
+import pandas as pd
 def pregunta_04():
     """
     Calcule el promedio de `c2` por cada letra de la `c1` del archivo
@@ -20,3 +21,10 @@ def pregunta_04():
     E    4.785714
     Name: c2, dtype: float64
     """
+
+    data_path = Path(__file__).resolve().parent.parent / "files" / "input"/ "tbl0.tsv"
+    df = pd.read_csv(data_path, sep="\t")
+    return df.groupby("c1")["c2"].mean()
+
+if __name__ == "__main__":
+    print(pregunta_04())
